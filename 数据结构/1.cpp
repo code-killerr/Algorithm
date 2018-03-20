@@ -6,7 +6,7 @@ struct stu{
 	float grade[5];
 
 }student[100];
-char *project[10]={"计算机原理","数据结构","数字电路","英语","jsp"};
+char project[10][10]={"计算机原理","数据结构","数字电路","英语","jsp"};
 float array()
 {
 	int j,i;
@@ -38,7 +38,7 @@ main()
 	{
 		student[j].num[i]=check;
 		++i;
-		for(i;i<20;)
+		for(i=0;i<20;)
 		{
 			if((student[j].num[i]=getchar())=='\n')
 				break;
