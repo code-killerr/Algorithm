@@ -25,8 +25,8 @@ link add(link p)
 {
     link *data=NULL;//初始化节点
     data=(link *)malloc(sizeof(link));
-    data.ID=p.ID;
-    p.next=data;
+    //data.ID=p.ID;
+    //p.next=data;
     return *data;
 }
 
