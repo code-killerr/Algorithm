@@ -73,9 +73,8 @@ main()
 			scanf("%f",&data->grade[i]);//录入成绩
 		}
 		getchar();
-		if(data->ID==-1)
             ++data->ID;
-		printf("请输入第%d个学生学号(EOF结束输入):",data->ID);
+		printf("请输入第%d个学生学号(EOF结束输入):",data->ID+1);
 
 	}
 	printf("输入您想进行的操作:1->插入2->删除3->查找4->划分\n");
@@ -119,5 +118,6 @@ main()
          //for(int j=0;j<5;j++)
         //    printf("%f\n",data->grade[j]);
         //printf("%d\n",data->ID);
+        //data=data->next
 	//}
 }
