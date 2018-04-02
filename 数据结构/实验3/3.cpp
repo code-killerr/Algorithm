@@ -9,7 +9,7 @@ typedef struct link
 };
 
 int flag=0;
-link head;//定义链表头
+link *head;//定义链表头
 char project[10][20]={("计算机原理"),("数据结构"),("数字电路"),("英语"),("jsp")};
 
 
@@ -25,8 +25,8 @@ link add(link p)
 {
     link *data=NULL;//初始化节点
     data=(link *)malloc(sizeof(link));
-    //data.ID=p.ID;
-    //p.next=data;
+    data->ID=p.ID;//结构体引用成员可以用.而结构体指针不行，必须->
+    p.next=data;//->表示直接从指针指向的地址中取出成员，不需要*转义
     return *data;
 }
 
@@ -42,9 +42,9 @@ main()
 	    i=0;//初始化录入字符
         if(flag==0)
         {
-            head=crate();
-            head.ID=-1;//初始化学生位置
-            data=head;
+            *head=crate();
+            head->ID=-1;//初始化学生位置
+            data=*head;
             flag++;
        }
        else
