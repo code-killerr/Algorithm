@@ -13,21 +13,24 @@ link *head;//定义链表头
 char project[10][20]={("计算机原理"),("数据结构"),("数字电路"),("英语"),("jsp")};
 
 
-link crate()
+link *crate()
 {
     link *data=NULL;//初始化链表头
     data=(link *)malloc(sizeof(link));//强制转换为link类型并开辟空间
-    return *data;
+    data->next=NULL;
+    data->ID=-1;//初始化学生位置
+    return data;
 }
 
 
-link add(link p)
+link *add(link *p)
 {
     link *data=NULL;//初始化节点
     data=(link *)malloc(sizeof(link));
-    data->ID=p.ID;//结构体引用成员可以用.而结构体指针不行，必须->
-    p.next=data;//->表示直接从指针指向的地址中取出成员，不需要*转义
-    return *data;
+    data->next=NULL;//初始化节点接口
+    data->ID=p->ID;//结构体引用成员可以用->而结构体指针不行，必须->
+    p->next=data;//->表示直接从指针指向的地址中取出成员，不需要*转义
+    return data;
 }
 
 
@@ -35,26 +38,25 @@ main()
 {
     int i=0,k=0,choose=0,code=0;//初始化
 	char check=0;
-	link data;
+	link *data;
 	printf("请输入学号");
 	while((check=getchar())!=EOF)//检测是否输入完毕
 	{
 	    i=0;//初始化录入字符
         if(flag==0)
         {
-            *head=crate();
-            head->ID=-1;//初始化学生位置
-            data=*head;
+            data=crate();//head记录链表头地址
+            head=data;//记录头结点
             flag++;
        }
        else
            data=add(data);
-		data.num[i]=check;//录入学号
+		data->num[i]=check;//录入学号
 		for(i=1;i<20;)
 		{
-			if((data.num[i]=getchar())=='\n')
+			if((data->num[i]=getchar())=='\n')
                {
-                   data.num[i]='\0';
+                   data->num[i]='\0';
                     break;
                }
 			++i;
@@ -68,15 +70,15 @@ main()
 		for(i=0;i<5;i++)
 		{
 			printf("%s:",project[i]);
-			scanf("%f",&data.grade[i]);//录入成绩
+			scanf("%f",&data->grade[i]);//录入成绩
 		}
 		getchar();
-		if(data.ID==-1)
-            ++data.ID;
-		printf("请输入第%d个学生学号(EOF结束输入):",data.ID);
+		if(data->ID==-1)
+            ++data->ID;
+		printf("请输入第%d个学生学号(EOF结束输入):",data->ID);
 
 	}
-	printf("输入您想进行的操作:1.插入2.删除3.查找4.划分\n");
+	printf("输入您想进行的操作:1->插入2->删除3->查找4->划分\n");
 		scanf("%d",&choose);
 	switch(choose)
 	{
@@ -110,4 +112,12 @@ main()
 	//case 4:break;
 	//case 5:break;
 	}
+	//data=head;
+	//while(data->next!=NULL)
+	//{
+	   // printf("%s\n",data->num);
+         //for(int j=0;j<5;j++)
+        //    printf("%f\n",data->grade[j]);
+        //printf("%d\n",data->ID);
+	//}
 }
