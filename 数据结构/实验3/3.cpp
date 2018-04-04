@@ -175,6 +175,7 @@ main()
     int i=0,k=0,choose=-1,code=0;
     link *data;//初始化
     Add_Message(data,1);//第二个参数为1代表输入链表数据操作
+    system("cls");
 	while(choose!=0)
     {
         printf("输入您想进行的操作:0.退出菜单1.插入2.删除3.逆序\n");
