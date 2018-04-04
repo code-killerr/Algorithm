@@ -6,6 +6,7 @@ typedef struct link
     char num[20];
 	float grade[5];
     int ID;//元素位置
+    link *front;
     link *next;
 };
 
@@ -19,8 +20,16 @@ link *crate(int mark)
     link *data=NULL;//初始化链表头
     data=(link *)malloc(sizeof(link));//强制转换为link类型并开辟空间
     if(mark)
+    {
         data->next=NULL;
-    else data->next=head;
+        data->front=NULL;
+    }
+    else
+    {
+        data->next=head;
+        data->front=head->front;
+        head->front=data;//前驱置为data执行将data放到前面
+    }
     data->ID=-1;//初始化学生位置
     return data;
 }
@@ -31,8 +40,9 @@ link *add(link *p,int mark)
     link *data=NULL;//初始化节点
     data=(link *)malloc(sizeof(link));
     if(mark)
-        data->next=NULL;
+        data->next=head;//收尾相接循环链表
     else data->next=p->next;//初始化节点接口
+    data->front=p;//双向链表
     data->ID=p->ID;//结构体引用成员可以用->而结构体指针不行，必须->
     p->next=data;//->表示直接从指针指向的地址中取出成员，不需要*转义
     return data;
@@ -130,7 +140,8 @@ int Delete_List(int del)
     {
         if(del==1)
             {
-                head=data->next;
+                head=data->next;//等价于head=head->next
+                head=head->front;
                 while(data!=NULL)
                 {
                     data->ID--;
@@ -141,6 +152,7 @@ int Delete_List(int del)
         if((data->ID-2)==del)
         {
             data->next=(data->next)->next;
+            (data->next)->front=data;
              while(data->next!=NULL)
                 {
                     data=data->next;
