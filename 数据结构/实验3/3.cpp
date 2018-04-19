@@ -9,7 +9,6 @@ typedef struct link
     link *front;
     link *next;
 };
-
 int flag=0;
 link *head;//定义链表头
 char project[10][20]={("计算机原理"),("数据结构"),("数字电路"),("英语"),("jsp")};
@@ -40,7 +39,8 @@ link *add(link *p,int mark)
     link *data=NULL;//初始化节点
     data=(link *)malloc(sizeof(link));
     if(mark)
-        data->next=head;//收尾相接循环链表
+        //data->next=head;//收尾相接循环链表
+		data->next=NULL;
     else data->next=p->next;//初始化节点接口
     data->front=p;//双向链表
     data->ID=p->ID;//结构体引用成员可以用->而结构体指针不行，必须->
@@ -135,22 +135,26 @@ int Insert_List(int insert)
 int Delete_List(int del)
 {
     link *data;
+	link *Del;
     data=head;
     while(data!=NULL)
     {
         if(del==1)
             {
                 head=data->next;//等价于head=head->next
-                head=head->front;
+                head->front=data->front;
+				Del=data;
                 while(data!=NULL)
                 {
                     data->ID--;
                     data=data->next;
                 }
-                return 1;;
+				delete Del;
+                return 1;
             }
         if((data->ID-2)==del)
         {
+			Del=data->next;
             data->next=(data->next)->next;
             (data->next)->front=data;
              while(data->next!=NULL)
@@ -158,6 +162,7 @@ int Delete_List(int del)
                     data=data->next;
                     data->ID--;
                 }
+				delete Del;//从内存删除数据
                 return 1;
 
         }
@@ -197,32 +202,33 @@ main()
         case 1: printf("请输入插入位置:");
                 scanf("%d",&k);
                 code=Insert_List(k);
+				system("cls");
                 if(code==0)
                     printf("插入位置有误\n");
                 else if(code==1)
                     printf("插入成功\n");
                 else printf("未知错误\n");
-                system("cls");
+				getchar();       
                 break;
         case 2: printf("输入需要删除信息的学生:");
                 scanf("%d",&k);
                 code=Delete_List(k);
+				system("cls");
                 if(code=0)
                     printf("不存在该学生\n");
                 else if(code=1)
                     printf("删除成功\n");
                 else printf("未知错误\n");
-                system("cls");
                 break;
         case 3: //code=Back_List(k);
+			    system("cls");
                 if(code==-1)
                     printf("逆序失败\n");
                 else printf("逆序成功\n",code);
-                system("cls");
                 break;
         //case 4:break;
         //case 5:break;
         }
     }
-	//Check();
+	Check();
 }
