@@ -1,27 +1,36 @@
 #include<stdio.h>
-typedef struct LinkStack
+#define MAX 100
+struct LinkStack
 {
-	int data[8];
-	LinkStack next;
-}
-LinkStack top=NULL;
+	int data;
+}line[MAX];
+int top=-1;//³õÊ¼»¯Õ»¶¥ 
 
-void crate()
-{
-	LinkSysck *p;
-	p->next=NULL;
-	top=p;
-}
 
-void Add()
+int Add(int rode)
 {
-	LinkStack *p;
-	top->next=p;
-	p->next=NULL;
-	top=p;
+	if(top<MAX)
+	{
+		++top;
+		line[top].data=rode;
+		return 0;
+	}
+	else return -1;
 }
 
-void Del()
-{
 
+int Del()
+{
+	if(top>-1)
+	{
+		--top;
+		return 0;
+	}
+	else return -1;
+}
+
+
+void main()
+{
+	
 }
