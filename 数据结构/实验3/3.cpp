@@ -186,6 +186,9 @@ void Check()
 	}
 }
 
+void Back_List(){
+
+}
 
 main()
 {
@@ -208,7 +211,7 @@ main()
                 else if(code==1)
                     printf("插入成功\n");
                 else printf("未知错误\n");
-				getchar();       
+				getchar();
                 break;
         case 2: printf("输入需要删除信息的学生:");
                 scanf("%d",&k);
