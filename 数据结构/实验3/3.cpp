@@ -186,8 +186,28 @@ void Check()
 	}
 }
 
+<<<<<<< HEAD
 void Back_List(){
 
+=======
+int Back_List(){
+	link *p;
+	link *data;
+	data = head;
+	while(data->next != NULL)
+	{
+		data = data->next;
+	}
+	head = data;
+	while(data != NULL)
+	{
+		p = data->next;
+		data -> next = data -> front;
+		data -> front = p;
+		data = data ->next;
+	}
+	return 1;
+>>>>>>> 47224323759654ae76c9204db7d78ddbdff2794f
 }
 
 main()
@@ -223,7 +243,7 @@ main()
                     printf("É¾³ý³É¹¦\n");
                 else printf("Î´Öª´íÎó\n");
                 break;
-        case 3: //code=Back_List(k);
+        case 3: code=Back_List();
 			    system("cls");
                 if(code==-1)
                     printf("ÄæÐòÊ§°Ü\n");

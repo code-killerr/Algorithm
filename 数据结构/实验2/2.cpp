@@ -1,8 +1,10 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include<iostream>
 #include<conio.h>
 #define SIZE 100
+using namespace std;
 typedef struct {
 	char num[20];
 	float grade[5];
@@ -13,7 +15,7 @@ int last=-1;//最后元素位置初始化
 char project[10][20]={("计算机原理"),("数据结构"),("数字电路"),("英语"),("jsp")};
 int Insert_List(int insert)
 {
-    int j=last;
+    int j=last,i;
     if(last==SIZE-1)//检查空间
         return -1;//返回-1错误
     if(insert<1||insert>(last+2))//检查插入位置
@@ -25,7 +27,7 @@ int Insert_List(int insert)
     }
     getchar();
     printf("请输入插入学生学号:");
-    for(int i=0;i<20;)
+    for(i=0;i<20;)
     {
         if((student[insert-1].num[i]=getchar())=='\n')//检测输入结束
         {
@@ -39,7 +41,7 @@ int Insert_List(int insert)
             i=0;
         }
     }
-    for(int i=0;i<5;i++)
+    for(i=0;i<5;i++)
     {
         printf("%s:",project[i]);
         scanf("%f",&student[insert-1].grade[i]);//录入成绩
@@ -60,16 +62,29 @@ int Delete_List(int del)
     --last;
     return 1;
 }
-int Search_List(int sea)
+int Search_List(int key)//折半查找
 {
-    int i;
-    for(i=0;i<=last&&student[i].ID!=sea;i++);
-    if(i>last)
-        return -1;
-    else
-        return i;
+	int high = last;
+	int low = 0;
+	int flag=-1,mid;
+	while(low<=high){
+		mid = (low+high)/2;
+		cout<<mid;
+		cout<<" ";
+		if(key<student[mid].ID)
+			high = mid;
+		else if(key>student[mid].ID)
+			low = mid;
+		else if(key == student[mid].ID){
+			flag = mid;
+			return flag;
+		}
+	}
 }
-main()
+
+
+
+int main()
 {
 	int i=0,k=0,choose=0,code=0;//初始化
 	char check=0;
@@ -150,4 +165,5 @@ main()
     //        printf("%f\n",student[i].grade[j]);
     //    printf("%d\n",student[i].ID);
 	//}
+	return 0;
 }
