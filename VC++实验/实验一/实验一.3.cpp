@@ -29,7 +29,7 @@ int main()
     CBook *p;
     p = a;
     for(int i = 4;i >= 0;i--)
-        (*(p+i)+).Show();
+        (*(p+i)).Show();
 
 	getchar();
 	return 0;
