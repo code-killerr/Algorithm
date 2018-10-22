@@ -1,21 +1,53 @@
-CREATE DATABASE STC;
+CREATE DATABASE STC;#建立数据库
 CREATE DATABASE SPJ;
-USE STC;
-CREATE TABLE Student(
-	number VARCHAR(40),
-	NAME VARCHAR(20),
-	age INT,
-	startSchool DATE
+USE STC;#选定数据库
+CREATE TABLE Student(#创建表
+	Sno CHAR(9) NOT NULL,
+	Sname CHAR(20) NOT NULL,
+	Ssex CHAR(2) CHECK(Ssex="M"||Ssex="F"),
+	Sage SMALLINT,
+	Sdept CHAR(20) NOT NULL,
+	PRIMARY KEY(Sno)
 );
-CREATE TABLE Course(number INT);
-CREATE TABLE SC(number INT);
+CREATE TABLE Course(Cno CHAR(4) NOT NULL,
+		    Cname CHAR(40) NOT NULL,
+		    Cpno CHAR(4),
+		    Ccredit SMALLINT,
+		    PRIMARY KEY(Cno)
+);
+CREATE TABLE SC(Sno CHAR(9) NOT NULL,
+		Cno CHAR(4) NOT NULL,
+		Grade SMALLINT CHECK(Grade>=0||Grade<=100),
+		PRIMARY KEY(Sno,Cno),
+		FOREIGN KEY(Sno) REFERENCES Student(Sno)
+		FOREIGN KEY(Cno) REFERENCES Course(Sno)
+		);
+
 USE SPJ;
-CREATE TABLE S(number INT);
-CREATE TABLE P(number INT);
-CREATE TABLE J(number INT);
-CREATE TABLE SPG(number INT);
-USE STC;
-SHOW TABLES;
-DESC student;
-SELECT * FROM student;
-DROP TABLE SC CASCADE;
+CREATE TABLE S(Sno CHAR(4) NOT NULL,
+	       Sname CHAR(20) NOT NULL,
+	       STATUS SMALLINT,
+	       City CHAR(20),
+	       PRIMARY KEY(Sno)
+);
+CREATE TABLE P(Pno CHAR(4) NOT NULL,
+	       Pname CHAR(20) NOT NULL,
+	       Color CHAR(4),
+	       Weight SMALLINT,
+	       PRIMARY KEY(Pno)
+);
+CREATE TABLE J(Jno CHAR(4) NOT NULL,
+	       Jname CHAR(20) NOT NULL,
+	       City CHAR(20),
+	       PRIMARY KEY(Jno)
+);
+CREATE TABLE SPG(Sno CHAR(4) NOT NULL,
+		 Pno CHAR(4) NOT NULL,
+		 Jno CHAR(4) NOT NULL,
+		 Qty SMALLINT,
+		 PRIMARY KEY(Sno,Pno,Jno)
+		 #FOREIGN KEY (`Sno`) REFERENCES `S` (`Sno`)
+);
+ALTER TABLE SPG
+
+ADD FOREIGN KEY (Sno) REFERENCES S(Sno);#添加外键

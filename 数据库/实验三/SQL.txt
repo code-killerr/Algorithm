@@ -1,0 +1,9 @@
+USE STC;
+SHOW TABLES;#展示库中的表
+DESC student;#显示表中项目
+SELECT * FROM student;#展示所有数据
+#drop table SC cascade;#删除表
+ALTER TABLE stc.student ADD nation CHAR(20);#在student中增加增加nation属性为char(20)
+ALTER TABLE stc.`student` DROP COLUMN nation;#在student表中删除nation属性
+ALTER TABLE stc.`student` ADD 入学时间 DATE;
+INSERT INTO stc.SC(Sno,Cno,Grade)VALUES("2001110","3",80);#在主键所在的表中拥有该数据才能插入
