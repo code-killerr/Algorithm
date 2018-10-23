@@ -6,4 +6,8 @@ SELECT * FROM student;#展示所有数据
 ALTER TABLE stc.student ADD nation CHAR(20);#在student中增加增加nation属性为char(20)
 ALTER TABLE stc.`student` DROP COLUMN nation;#在student表中删除nation属性
 ALTER TABLE stc.`student` ADD 入学时间 DATE;
+INSERT INTO stc.`student`(Sno,Sname,Ssex,Sage,Sdept,入学时间) VALUES("2001110","aaa",NULL,NULL," ",NULL);
+INSERT INTO stc.`course`(Cno,Cname,Cpno,Ccredit) VALUES("3","aaa",NULL,NULL);
 INSERT INTO stc.SC(Sno,Cno,Grade)VALUES("2001110","3",80);#在主键所在的表中拥有该数据才能插入
+SELECT * FROM stc.`sc`;
+UPDATE stc.`sc` SET Grade = 70 WHERE Sno = 2001110;#更改表中数据
