@@ -55,7 +55,7 @@ class MergeSort{
 	}
 	public static void main(String[] args){
 		Scanner cin = new Scanner(System.in);
-		1en;// ‰»Î
+		int len;// ‰»Î
 		len = cin.nextInt();
 		int[] number = new int[len];
 		for(int i = 0;i <len ;i++)
