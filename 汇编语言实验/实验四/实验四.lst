@@ -1,0 +1,83 @@
+Microsoft (R) Macro Assembler Version 6.11		    11/09/18 15:12:33
+tempfile.asm						     Page 1 - 1
+
+
+				.model small
+				.stack
+ 0000				.data
+ 0000				.code
+ 0000  BB 0000			Begin: MOV BX,0  ;用于存放四位的16进制数
+ 0003  B5 04			       MOV CH,4  ;ch初始为4表示输入四位数字+-
+ 0005  B1 04			       MOV CL,4  
+ 0007  D3 E3			INPUT: SHL BX,CL ;将前面输入的数左移4位
+ 0009  B4 01			       MOV AH,1  ;从键盘取数
+ 000B  CD 21			       INT 21H;读取1个4字节数放入AL
+ 000D  3C 30			       CMP AL,30H ;<0吗？
+ 000F  72 F6			       JB INPUT   ;不是"0~F"的数重新输入
+ 0011  3C 39			       CMP AL,39H ; 是"0~9"吗？JB表示小于跳转
+ 0013  77 04			       JA AF      ;不是，转"A~F"的处理 JA表示大于跳转
+ 0015  24 0F			       AND AL,0FH ;转换为：0000B~1001B 0到9ASCII码为30-39所以去掉高四位转为0-9
+ 0017  EB 0E			       JMP BINARY
+ 0019  24 DF			AF:    AND AL,11011111B ;转换为大写字母
+ 001B  3C 41			       CMP AL,41H  ;判断<A？
+ 001D  72 E8			       JB INPUT    ;不是"A~F"的数重新输入 JB小于跳转
+ 001F  3C 46			       CMP AL,46H  ;>F吗？
+ 0021  77 E4			       JA INPUT    ;不是"A~F"的数重新输入  jA大于跳转
+ 0023  24 0F			       AND AL,0FH  ;转换为1010B~1111B  0FH = 00001111 A-F 41-46,去掉高四位1-6
+ 0025  04 09			       ADD AL,9		;+9变为代表的值
+ 0027  0A D8			BINARY: OR BL,AL   ;将键盘输入的数进行组合？？？？？
+ 0029  FE CD			        DEC CH	   ;ch -1跳转至input
+ 002B  75 DA			        JNZ INPUT
+ 002D  B9 0010			        MOV CX,16  ;将16位二进制数一位位地转换成ASCII码显示
+ 0030  B2 00			DISP:   MOV DL,0
+ 0032  D1 C3			        ROL BX,1   ;循环移位一个
+ 0034  D0 D2			        RCL DL,1   ;带CF的移位一个？？？？
+ 0036  80 CA 30			        OR DL,30H
+ 0039  B4 02			        MOV AH,2   ;		进行显示
+ 003B  CD 21			        INT 21H
+ 003D  E2 F1			        LOOP DISP
+ 003F  C3			  STOP: ret
+				  end begin
+
+
+
+
+
+Microsoft (R) Macro Assembler Version 6.11		    11/09/18 15:12:33
+tempfile.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+DGROUP . . . . . . . . . . . . .	GROUP
+_DATA  . . . . . . . . . . . . .	16 Bit	 0000	  Word	  Public  'DATA'	
+STACK  . . . . . . . . . . . . .	16 Bit	 0400	  Para	  Stack	  'STACK'	 
+_TEXT  . . . . . . . . . . . . .	16 Bit	 0040	  Word	  Public  'CODE'	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 0000h	 
+@DataSize  . . . . . . . . . . .	Number	 0000h	 
+@Interface . . . . . . . . . . .	Number	 0000h	 
+@Model . . . . . . . . . . . . .	Number	 0002h	 
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 DGROUP
+@fardata?  . . . . . . . . . . .	Text   	 FAR_BSS
+@fardata . . . . . . . . . . . .	Text   	 FAR_DATA
+@stack . . . . . . . . . . . . .	Text   	 DGROUP
+AF . . . . . . . . . . . . . . .	L Near	 0019	  _TEXT	
+BINARY . . . . . . . . . . . . .	L Near	 0027	  _TEXT	
+Begin  . . . . . . . . . . . . .	L Near	 0000	  _TEXT	
+DISP . . . . . . . . . . . . . .	L Near	 0030	  _TEXT	
+INPUT  . . . . . . . . . . . . .	L Near	 0007	  _TEXT	
+STOP . . . . . . . . . . . . . .	L Near	 003F	  _TEXT	
+
+	   0 Warnings
+	   0 Errors
