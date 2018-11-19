@@ -11,3 +11,14 @@ INSERT INTO stc.`course`(Cno,Cname,Cpno,Ccredit) VALUES("3","aaa",NULL,NULL);
 INSERT INTO stc.SC(Sno,Cno,Grade)VALUES("2001110","3",80);#在主键所在的表中拥有该数据才能插入
 SELECT * FROM stc.`sc`;
 UPDATE stc.`sc` SET Grade = 70 WHERE Sno = 2001110;#更改表中数据
+DELETE FROM stc.sc WHERE Sno = 2001110;
+CREATE INDEX IXsage ON student(Sno ASC,Sage DESC);#建立索引以学号升序排列，如果相同则以年龄降序排列
+DROP INDEX IXsage ON student;#删除
+
+
+ALTER TABLE student ADD UNIQUE(Sname);#添加Sname唯一索引
+
+ALTER TABLE spj.`s` ADD UNIQUE(Sname);
+UPDATE p SET color = '蓝' WHERE color = '红';#红的改成蓝的
+UPDATE spg SET Sno = 'S3' WHERE Sno = 's5' AND pno = 'P6' AND Jno = 'J4';
+#delete from spg where sno = 's2' 
