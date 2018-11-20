@@ -1,0 +1,16 @@
+SELECT Sname,City FROM spj.`s`;#查询名称和位置
+SELECT Pname,Color,Weight FROM spj.`p`;#查询名称，颜色，重量
+SELECT Jno FROM spj.`spg` WHERE Sno = "S1";#找出使用供应商S1所供应零件的工程号码；
+SELECT Pname,Qty FROM spj.`p`,spj.`spg` WHERE Jno = "J2" AND P.`Pno` = spg.`Pno` ORDER BY qty DESC;#找出工程项目J2使用的各种零件的名称及数量，并按数量降序排列；
+SELECT s.`Sname`,spg.`Sno` FROM spj.`s`,spj.`spg` WHERE Jno = "J1" AND s.`Sno` = spg.`Sno`;#找出工程J1零件的供应商号码SNO；
+SELECT Jno,SUM(Qty) FROM spj.`spg` GROUP BY Jno;#找出每个工程及使用零件数量的总和；
+SELECT Sno,Sname FROM stc.`student` WHERE sdept = "CS";# 查询计算机系的学生学号和姓名。
+# 查询选修了课程的学生学号和姓名。
+# 查询选修1号课程的学生学号和成绩，并要求对查询结果按成绩降序排列，如果成绩相同则按学号升序排列。
+# 查询选修1号课程且成绩在80~90之间的学生学号和成绩，并将成绩乘以系数0.75输出。
+# 查询计算机系和数学系姓张的学生的信息。
+# 查询缺少了成绩的学生的学号和课程号。
+# 查询学生的学号、姓名、选修的课程名及成绩。
+# 查询选修1号课程且成绩在90分以上的学生学号、姓名及成绩。
+# 查询每一门课程及先修课信息，包括课程号、课程名、先修课号和先修课程名。
+# 查询每个学生的基本信息以及他所选修课程的课程号（包括没有选课的学生）。

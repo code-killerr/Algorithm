@@ -21,4 +21,5 @@ ALTER TABLE student ADD UNIQUE(Sname);#添加Sname唯一索引
 ALTER TABLE spj.`s` ADD UNIQUE(Sname);
 UPDATE p SET color = '蓝' WHERE color = '红';#红的改成蓝的
 UPDATE spg SET Sno = 'S3' WHERE Sno = 's5' AND pno = 'P6' AND Jno = 'J4';
-#delete from spg where sno = 's2' 
+DELETE FROM s WHERE Sno = 's2';
+INSERT INTO spj.`spg` VALUES("S2","P4","J6",200);#没有S2无法添加
