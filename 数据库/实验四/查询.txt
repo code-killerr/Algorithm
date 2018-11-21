@@ -5,12 +5,12 @@ SELECT Pname,Qty FROM spj.`p`,spj.`spg` WHERE Jno = "J2" AND P.`Pno` = spg.`Pno`
 SELECT s.`Sname`,spg.`Sno` FROM spj.`s`,spj.`spg` WHERE Jno = "J1" AND s.`Sno` = spg.`Sno`;#找出工程J1零件的供应商号码SNO；
 SELECT Jno,SUM(Qty) FROM spj.`spg` GROUP BY Jno;#找出每个工程及使用零件数量的总和；
 SELECT Sno,Sname FROM stc.`student` WHERE sdept = "CS";# 查询计算机系的学生学号和姓名。
-# 查询选修了课程的学生学号和姓名。
-# 查询选修1号课程的学生学号和成绩，并要求对查询结果按成绩降序排列，如果成绩相同则按学号升序排列。
-# 查询选修1号课程且成绩在80~90之间的学生学号和成绩，并将成绩乘以系数0.75输出。
-# 查询计算机系和数学系姓张的学生的信息。
-# 查询缺少了成绩的学生的学号和课程号。
-# 查询学生的学号、姓名、选修的课程名及成绩。
-# 查询选修1号课程且成绩在90分以上的学生学号、姓名及成绩。
+SELECT student.Sno,Sname FROM stc.`student`,stc.`sc` WHERE sc.Sno = student.Sno GROUP BY Sname;# 查询选修了课程的学生学号和姓名。
+SELECT Sno,Grade FROM stc.`sc` WHERE Cno = "1" ORDER BY DESC;# 查询选修1号课程的学生学号和成绩，并要求对查询结果按成绩降序排列，如果成绩相同则按学号升序排列。
+SELECT Sno,Grade*0.75 FROM stc.`sc` WHERE Cno = "1" AND Grade > 80 AND Grade < 90;# 查询选修1号课程且成绩在80~90之间的学生学号和成绩，并将成绩乘以系数0.75输出。
+SELECT * FROM stc.student WHERE sdept = "cs" OR "ma" AND Sname LIKE "张%";# 查询计算机系和数学系姓张的学生的信息。
+SELECT Sno,Cno FROM stc.`sc` WHERE Grade = NULL;# 查询缺少了成绩的学生的学号和课程号。
+SELECT student.Sno,student.Sname,sc.Cno,Grade FROM stc.`student`,stc.`sc`,stc.`course` WHERE sc.Sno = student.Sno AND course.Cno = sc.Cno;# 查询学生的学号、姓名、选修的课程名及成绩。
+SELECT Cno,Grade,Sname FROM stc.`sc`,stc.`student` WHERE Grade > 90;# 查询选修1号课程且成绩在90分以上的学生学号、姓名及成绩。
 # 查询每一门课程及先修课信息，包括课程号、课程名、先修课号和先修课程名。
-# 查询每个学生的基本信息以及他所选修课程的课程号（包括没有选课的学生）。
+SELECT student.*,sc.Cno,grade FROM stc.`student` LEFT OUTER JOIN stc.sc ON student.Sno = sc.Sno; # 查询每个学生的基本信息以及他所选修课程的课程号（包括没有选课的学生）。
