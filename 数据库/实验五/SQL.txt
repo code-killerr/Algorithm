@@ -1,0 +1,12 @@
+select spg.Pno from spj.`spg`,spj.`p`,spj.`s` where City = "上海" and spg.Sno = S.`Sno` and spg.`Pno` = p.`Pno`;#找出上海厂商供应的所有零件号码；
+select j.`Jname` from spj.`spg`,spj.`j`,spj.`s` where J.`Jno` = spg.`Jno` and spg.`Sno` = s.`Sno` and s.`City` = "上海" ;#找出使用上海产的零件的工程名称；
+select Jno from spg where Jno not in (select Jno from spj.`spg`,spj.`s` where spg.`Sno` = s.`Sno` and city = "天津");#找出没有使用天津产的零件的工程号码；
+UPDATE spj.`p` SET color = "红" WHERE Pno = "p1" OR Pno = "P4" OR Pno = "P6";
+select spg.Sno from spj.`spg`,spj.`p`,spj.`j` where P.Color = "红" and spg.`Jno` = "J1" and spg.`Jno` = j.`Jno` and spg.`Pno` = p.`Pno`;#找出供应工程J1零件为红色的供应商号码SNO；
+select Jno from spj.J where Jno not in (select spg.Jno from spj.`s`,spj.`p`,spj.`spg` where s.`city` = "天津" and p.`Color` = "红" and spg.`sno` = s.`sno` AND spg.`Pno` = p.`Pno`);#找出没有使用天津供应商生产的红色零件的工程号JNO；
+#找出至少使用了供应商S1所供应的全部零件的工程号码JNO；
+select Count(*) from stc.student;#查询学生的总人数。
+select count(Distinct Sno) from stc.`sc`;#查询选修了课程的学生人数。
+select Cno,count(Sno) from stc.`sc` group by Cno;#查询课程的课程号和选修该课程的人数
+select sc.Sno,Sname from stc.`student`,stc.`sc` where student.Sno = sc.`Sno` group by Sno having count(*)>2;#查询选修课超过2门课的学生学号、姓名。
+select sc.`Sno`,Sname from stc.`student`,stc.`sc`,stc.`course` where course.`Cname` = "数据库" and student.Sno = sc.`Sno` and sc.`Cno` = course.`Cno`;#查询选修了数据库的学生学号和姓名。
