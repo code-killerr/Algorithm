@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 6.11		    11/09/18 12:32:24
+Microsoft (R) Macro Assembler Version 6.11		    11/23/18 11:19:51
 tempfile.asm						     Page 1 - 1
 
 
@@ -38,7 +38,7 @@ tempfile.asm						     Page 1 - 1
  0027  CD 21			INT 21H
  0029				PROG ENDS
 				END START
-Microsoft (R) Macro Assembler Version 6.11		    11/09/18 12:32:24
+Microsoft (R) Macro Assembler Version 6.11		    11/23/18 11:19:51
 tempfile.asm						     Symbols 2 - 1
 
 
