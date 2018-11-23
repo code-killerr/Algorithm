@@ -1,7 +1,8 @@
 ;PROGRAM TITLE GOES HERE――result
 ;************************************
 ;改进增加了数据输出
-datas    segment                     ;define data segment
+;change-author:CodeKiller
+datas    segment                     ;define data segment 定义数据段
   grade   dw          56,69,84,82,73,88,99,63,100,80
   s5      dw          0
   s6      dw          0
@@ -97,6 +98,7 @@ print: 						;最后没有结束符会导致打印到最后停不下来
 codes  ends
 ;***************************
  end     start                 ; end assembly
+
 
 
 
