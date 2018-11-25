@@ -1,0 +1,168 @@
+Microsoft (R) Macro Assembler Version 6.11		    11/23/18 15:16:32
+tempfile.asm						     Page 1 - 1
+
+
+				;PROGRAM TITLE GOES HERE――result
+				;************************************
+				;改进增加了数据输出
+				;change-author:CodeKiller
+ 0000				datas    segment                     ;define data segment 定义数据段
+ 0000 0038 0045 0054 0052	  grade   dw          56,69,84,82,73,88,99,63,100,80
+       0049 0058 0063
+       003F 0064 0050
+ 0014 0000			  s5      dw          0
+ 0016 0000			  s6      dw          0
+ 0018 0000			  s7      dw          0
+ 001A 0000			  s8      dw          0
+ 001C 0000			  s9      dw          0
+ 001E 0000			  s10     dw          0
+ 0020 67 72 61 64 65 20		  word1   db           'grade below 60:$'
+       62 65 6C 6F 77 20
+       36 30 3A 24
+ 0030 67 72 61 64 65 20		  word2	  db		   'grade below 70:$'
+       62 65 6C 6F 77 20
+       37 30 3A 24
+ 0040 67 72 61 64 65 20		  word3   db		   'grade below 80:$'
+       62 65 6C 6F 77 20
+       38 30 3A 24
+ 0050 67 72 61 64 65 20		  word4   db		   'grade below 90:$'
+       62 65 6C 6F 77 20
+       39 30 3A 24
+ 0060 67 72 61 64 65 20		  word5   db		   'grade below 100:$'
+       62 65 6C 6F 77 20
+       31 30 30 3A 24
+ 0071 67 72 61 64 65 20		  word6   db           'grade is 100:$'
+       69 73 20 31 30 30
+       3A 24
+ 007F 0020 R 0030 R 0040 R	  wordall dw word1,word2,word3,word4,word5,word6
+       0050 R 0060 R 0071 R
+ 008B				datas  ends
+				;************************************
+ 0000				codes segment                       ;define code segment
+				;----------------------------
+				;main      proc      far               ; main part of program
+				assume  cs:codes, ds:datas
+ 0000				start:                          ; starting execution address
+				; set up stack for return
+ 0000  1E			         push     ds                  ; save old data segment 防止ds中拥有数据被覆盖,将ds数据压栈
+ 0001  2B C0			         sub      ax,ax               ; put zero in AX AX清0
+ 0003  50			         push     ax                  ; save it on stack AX 压栈
+				; set DS register to current data segment
+ 0004  B8 ---- R		         mov      ax,datas          ; datas segment addr 将数据存储于AX
+ 0007  8E D8			         mov      ds,ax               ; into DS register 将数据转移到ds段寄存器
+				; MAIN PART OF PROGRAM GOES HERE
+ 0009  C7 06 0014 R 0030	         mov      s5, 48               ; initialize counter 初始化各个变量
+ 000F  C7 06 0016 R 0030	         mov      s6, 48
+ 0015  C7 06 0018 R 0030	         mov      s7, 48
+ 001B  C7 06 001A R 0030	         mov      s8, 48
+ 0021  C7 06 001C R 0030	         mov      s9, 48
+ 0027  C7 06 001E R 0030	         mov      s10, 48
+ 002D  B9 000A			         mov      cx, 10              ; initialize loop count value 设置循环次数为10,10个数据
+ 0030  BB 0000 R		         mov      bx, offset grade      ; initialize first addr 把grade的地址偏移送到bx以便后期读取数据
+ 0033				compare:
+ 0033  8B 07			         mov      ax, [bx]             ; get a result 将第一个数据传入ax
+ 0035  83 F8 3C			         cmp      ax, 60               ; <60? 判断是否小于60
+ 0038  7C 32			         jl        five					;如果小于转到five进行计数
+ 003A  83 F8 46			         cmp     ax, 70                ; <70? 判断是否小于70 包括70
+ 003D  7C 27			         jl       six					;小于转到six
+ 003F  83 F8 50			         cmp     ax, 80                ; <80? 判断是否小于80 包括80
+ 0042  7C 1C			         jl       seven					;小于转到seven
+ 0044  83 F8 5A			         cmp     ax, 90                ; <90? 判断是否小于90小于转到eight
+ 0047  7C 11			         jl       eight
+ 0049  83 F8 64			         cmp     ax, 100               ; =100? 和100对比是否为100
+ 004C  75 06			         jne      nine					;不等于100转移到nine
+ 004E  FF 06 001E R		         inc      s10					;等于100 S10自加
+ 0052  EB 1C			         jmp     short change_addr ;short代表在-128 - 127字节内跳转
+ 0054  FF 06 001C R		  nine:  inc       s9
+ 0058  EB 16			         jmp     short change_addr 
+ 005A  FF 06 001A R		  eight:  inc      s8
+ 005E  EB 10			         jmp     short change_addr
+ 0060  FF 06 0018 R		  seven:  inc      s7
+ 0064  EB 0A			         jmp     short change_addr
+ 0066  FF 06 0016 R		  six:    inc       s6
+ 006A  EB 04			         jmp     short change_addr
+ 006C  FF 06 0014 R		  five:   inc       s5 ;s5自加1
+ 0070				change_addr:
+ 0070  83 C3 02			         add     bx, 2   ;跳转到第二个数据
+ 0073  E2 BE			         loop    compare ;cx减1并跳转compare继续对比
+ 0075  B9 0006			         mov cx,6
+ 0078  BE 007F R		         mov si,offset wordall
+ 007B  BF 0014 R		         mov di,offset s5
+ 007E				print: 						;最后没有结束符会导致打印到最后停不下来
+ 007E  B4 09					 mov ah,9
+ 0080  8B 14					 mov dx,[si]
+ 0082  CD 21					 int 21h;输出说明语句
+						 
+ 0084  B4 02					 mov ah,2
+ 0086  8B 15					 mov dx,[di]
+ 0088  CD 21					 int 21h;输出数据
+						 
+ 008A  83 C2 01					 add dx,1
+ 008D  2B D2					 sub dx,dx
+ 008F  B4 02					 mov ah,2
+ 0091  BA 000A					 mov dx,0ah
+ 0094  CD 21					 int 21h;换行
+						 
+ 0096  83 C6 02					 add si,2;跳到下一个语句
+ 0099  83 C7 02					 add di,2
+						
+ 009C  49					 dec cx
+ 009D  83 F9 00					 cmp cx,0
+ 00A0  75 DC					 jne print;控制循环
+						 
+						 
+ 00A2  B8 4C00			         mov AX,4C00H                          ; return to DOS 程序结束
+				;main     endp                         ; end of main part of program
+				; ------------------------------
+ 00A5				codes  ends
+				;***************************
+				 end     start                 ; end assembly
+
+
+
+
+
+Microsoft (R) Macro Assembler Version 6.11		    11/23/18 15:16:32
+tempfile.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+codes  . . . . . . . . . . . . .	16 Bit	 00A5	  Para	  Private 
+datas  . . . . . . . . . . . . .	16 Bit	 008B	  Para	  Private 
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+change_addr  . . . . . . . . . .	L Near	 0070	  codes	
+compare  . . . . . . . . . . . .	L Near	 0033	  codes	
+eight  . . . . . . . . . . . . .	L Near	 005A	  codes	
+five . . . . . . . . . . . . . .	L Near	 006C	  codes	
+grade  . . . . . . . . . . . . .	Word	 0000	  datas	
+nine . . . . . . . . . . . . . .	L Near	 0054	  codes	
+print  . . . . . . . . . . . . .	L Near	 007E	  codes	
+s10  . . . . . . . . . . . . . .	Word	 001E	  datas	
+s5 . . . . . . . . . . . . . . .	Word	 0014	  datas	
+s6 . . . . . . . . . . . . . . .	Word	 0016	  datas	
+s7 . . . . . . . . . . . . . . .	Word	 0018	  datas	
+s8 . . . . . . . . . . . . . . .	Word	 001A	  datas	
+s9 . . . . . . . . . . . . . . .	Word	 001C	  datas	
+seven  . . . . . . . . . . . . .	L Near	 0060	  codes	
+six  . . . . . . . . . . . . . .	L Near	 0066	  codes	
+start  . . . . . . . . . . . . .	L Near	 0000	  codes	
+word1  . . . . . . . . . . . . .	Byte	 0020	  datas	
+word2  . . . . . . . . . . . . .	Byte	 0030	  datas	
+word3  . . . . . . . . . . . . .	Byte	 0040	  datas	
+word4  . . . . . . . . . . . . .	Byte	 0050	  datas	
+word5  . . . . . . . . . . . . .	Byte	 0060	  datas	
+word6  . . . . . . . . . . . . .	Byte	 0071	  datas	
+wordall  . . . . . . . . . . . .	Word	 007F	  datas	
+
+	   0 Warnings
+	   0 Errors
