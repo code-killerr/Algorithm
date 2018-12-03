@@ -1,0 +1,26 @@
+CREATE VIEW CS_student
+AS SELECT Sno,Cno,Grade FROM stc.`sc` WHERE Grade < 90;#创建视图CS：选课成绩小于90分的学生的学号、所选课程号和课程成绩。
+CREATE VIEW Sdata 
+AS SELECT Sname,Sdept,GROUP_CONCAT(Cname) 
+FROM stc.`student`,stc.`course`,stc.`sc` 
+WHERE sc.`Cno` = course.`Cno` AND sc.`Sno` = student.`Sno` 
+GROUP BY Sname;#创建视图：视图由学生姓名、系别及他所选课程名组成。
+CREATE VIEW Cgrade 
+AS SELECT Sname,Cname,Grade+5 FROM stc.`course`,stc.`sc`,stc.`student`
+WHERE sc.`Cno` = course.`Cno` AND sc.`Sno` = student.`Sno`;#3. 创建视图：视图由学生姓名及所选课程名和所有课程成绩都比原来多5分组成。
+CREATE VIEW Savg
+AS SELECT Sno,AVG(Grade) 
+FROM stc.`sc` GROUP BY(Sno);#创建分组视图：将学生的学号及他的平均成绩定义为一个视图。
+CREATE VIEW CS2 
+AS SELECT Sno,COUNT(Cno),AVG(Grade) FROM CS_student GROUP BY Sno;#创建基于视图的视图：基于1中建立的视图CS，定义一个包括学号、所选课程数目和平均成绩的视图。
+SELECT Sname FROM stc.`student` WHERE sdept = 'IS';#查询所有选修‘信息系统’的学生姓名。
+INSERT INTO stc.`student` VALUES('3390552','bbb','M',22,'IS',NULL);
+INSERT INTO stc.cs_student VALUES('3390552','6',70);#插入一条元组到1中所建视图CS，若是视图的定义中存在WHIT CHECK OPTION子句对插入操作有何影响。
+#插入视图的语句会将数据放在sc表中，视图只是虚表，会将数据存入它所涉及的表中，如果涉及其它表主键会报错
+#insert into stc.cgrade values('大白兔','组成原理',87);数据不全缺少主键会报错没有字段列表
+UPDATE stc.`cs_student` SET grade = cs_student.`Grade` + 10;#对1中所建视图CS（存在WHIT CHECK OPTION子句）的成绩均增加10分,减去10分，不满足条件的项消失
+UPDATE stc.`cs_student` SET grade = cs_student.`Grade` - 10;#只对其中有的项有效
+ALTER VIEW CS_student
+AS SELECT Sno,Cno,Grade FROM stc.`sc` WHERE Grade < 90 WITH CHECK OPTION;#重建视图
+UPDATE stc.`cs_student` SET grade = cs_student.`Grade` + 10;#显示check option不符，查询失败
+DROP VIEW stc.`Savg`,stc.`cgrade`#取消3，4中所建视图
