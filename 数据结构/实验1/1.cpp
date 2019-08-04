@@ -1,4 +1,4 @@
-#include<stdio.h>
+ï»¿#include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
 struct stu{
@@ -6,12 +6,12 @@ struct stu{
 	float grade[5];
 
 }student[100];
-char project[10][10]={"¼ÆËã»úÔ­Àí","Êı¾İ½á¹¹","Êı×ÖµçÂ·","Ó¢Óï","jsp"};
+char project[20][20]={"è®¡ç®—æœºåŸç†","æ•°æ®ç»“æ„","æ•°å­—ç”µè·¯","è‹±è¯­","jsp"};
 float array()
 {
 	int j,i;
 	float sum=0;
-	printf("Ñ¡ÔñĞèÒª²é¿´µÄÑ§Éú:");
+	printf("é€‰æ‹©éœ€è¦æŸ¥çœ‹çš„å­¦ç”Ÿ:");
 	scanf("%d",&i);
 	for(j=0;j<5;j++)
 		sum+=student[i-1].grade[j];
@@ -22,18 +22,18 @@ void Project_Array(int num)
 {
 	int i,j;
 	float sum=0;
-	printf("Ñ¡ÔñĞèÒª²é¿´¿ÆÄ¿µÄÆ½¾ù·Ö1.¼ÆËã»úÔ­Àí,2.Êı¾İ½á¹¹,3.Êı×ÖµçÂ·,4.Ó¢Óï,5.jsp");
+	printf("é€‰æ‹©éœ€è¦æŸ¥çœ‹ç§‘ç›®çš„å¹³å‡åˆ†1.è®¡ç®—æœºåŸç†,2.æ•°æ®ç»“æ„,3.æ•°å­—ç”µè·¯,4.è‹±è¯­,5.jsp");
 	scanf("%d",&j);
 	for(i=0;i<num;i++)
 		sum+=student[i].grade[j-1];
-	printf("%sµÄÆ½¾ù·ÖÎª%f",project[j],sum/num);
+	printf("%sçš„å¹³å‡åˆ†ä¸º%f",project[j],sum/num);
 }
 main()
 {
 	int i=0,j=0,k=0,choose;
 	char check;
 
-	printf("ÇëÊäÈëÑ§ºÅ");
+	printf("è¯·è¾“å…¥å­¦å·");
 	while((check=getchar())!=EOF)
 	{
 		student[j].num[i]=check;
@@ -45,7 +45,7 @@ main()
 			++i;
 			if(i>19)
 			{
-				printf("Ñ§ºÅ´óĞ¡³¬³öÏŞÖÆ£¬ÖØĞÂÊäÈëÑ§ºÅ");
+				printf("å­¦å·å¤§å°è¶…å‡ºé™åˆ¶ï¼Œé‡æ–°è¾“å…¥å­¦å·");
 				i=0;
 			}
 
@@ -57,14 +57,14 @@ main()
 		}
 		getchar();
 		++j;
-		printf("ÇëÊäÈëµÚ%d¸öÑ§ÉúÑ§ºÅ(EOF½áÊøÊäÈë):",j+1);
+		printf("è¯·è¾“å…¥ç¬¬%dä¸ªå­¦ç”Ÿå­¦å·(EOFç»“æŸè¾“å…¥):",j+1);
 
 	}
-	printf("ÊäÈëÄúÏë½øĞĞµÄ²Ù×÷:1.ÇóÑ§Éú¸÷¿ÆÆ½¾ùÖµ2.ÇóÈ«²¿¸÷¿Æ³É¼¨Æ½¾ùÖµ\n");
+	printf("è¾“å…¥æ‚¨æƒ³è¿›è¡Œçš„æ“ä½œ:1.æ±‚å­¦ç”Ÿå„ç§‘å¹³å‡å€¼2.æ±‚å…¨éƒ¨å„ç§‘æˆç»©å¹³å‡å€¼\n");
 		scanf("%d",&choose);
 	switch(choose)
 	{
-	case 1:printf("¸ÃÑ§ÉúÆ½¾ù³É¼¨Îª:%f",array());break;
+	case 1:printf("è¯¥å­¦ç”Ÿå¹³å‡æˆç»©ä¸º:%f",array());break;
 	case 2:Project_Array(j);break;
 	}
 }

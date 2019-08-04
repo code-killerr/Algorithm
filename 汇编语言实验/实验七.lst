@@ -1,0 +1,70 @@
+Microsoft (R) Macro Assembler Version 6.11		    01/02/19 18:26:41
+tempfile.asm						     Page 1 - 1
+
+
+				.model small
+ 0000				.data
+				.stack
+ 0000				.code
+ 0000  B8 2345			start:mov ax,0010001101000101B
+ 0003  8B D8			MOV BX,AX
+ 0005  B1 04			MOV CL,4
+ 0007  D2 EC			SHR AH,CL
+ 0009  80 C4 30			ADD AH,30H
+ 000C  8A D4			MOV DL,AH
+ 000E  B4 02			MOV AH,2
+ 0010  CD 21			INT 21H;   ‘显示“2”
+ 0012  8A E7			MOV AH,BH
+ 0014  80 E4 0F			AND AH,0FH
+ 0017  80 C4 30			ADD AH,30H
+ 001A  8A D4			MOV DL,AH
+ 001C  B4 02			MOV AH,2
+ 001E  CD 21			INT 21H ;   ‘显示“3”
+ 0020  8A C3			MOV AL,BL
+ 0022  B1 04			MOV CL,4
+ 0024  D2 E8			SHR AL,CL
+ 0026  04 30			ADD AL,30H
+ 0028  8A D0			MOV DL,AL
+ 002A  B4 02			MOV AH,2
+ 002C  CD 21			INT 21H  ;  ‘显示“4”
+ 002E  8A C3			MOV AL,BL
+ 0030  24 0F			AND AL,0FH
+ 0032  04 30			ADD AL,30H
+ 0034  8A D0			MOV DL,AL
+ 0036  B4 02			MOV AH,2
+ 0038  CD 21			INT 21H  ;  ‘显示“5”
+				end start
+
+Microsoft (R) Macro Assembler Version 6.11		    01/02/19 18:26:41
+tempfile.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+DGROUP . . . . . . . . . . . . .	GROUP
+_DATA  . . . . . . . . . . . . .	16 Bit	 0000	  Word	  Public  'DATA'	
+STACK  . . . . . . . . . . . . .	16 Bit	 0400	  Para	  Stack	  'STACK'	 
+_TEXT  . . . . . . . . . . . . .	16 Bit	 003A	  Word	  Public  'CODE'	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 0000h	 
+@DataSize  . . . . . . . . . . .	Number	 0000h	 
+@Interface . . . . . . . . . . .	Number	 0000h	 
+@Model . . . . . . . . . . . . .	Number	 0002h	 
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 DGROUP
+@fardata?  . . . . . . . . . . .	Text   	 FAR_BSS
+@fardata . . . . . . . . . . . .	Text   	 FAR_DATA
+@stack . . . . . . . . . . . . .	Text   	 DGROUP
+start  . . . . . . . . . . . . .	L Near	 0000	  _TEXT	
+
+	   0 Warnings
+	   0 Errors

@@ -1,0 +1,33 @@
+.model small
+.data
+.stack
+.code
+start:mov ax,0010001101000101B
+MOV BX,AX
+MOV CL,4
+SHR AH,CL
+ADD AH,30H
+MOV DL,AH
+MOV AH,2
+INT 21H;   ‘显示“2”
+MOV AH,BH
+AND AH,0FH
+ADD AH,30H
+MOV DL,AH
+MOV AH,2
+INT 21H ;   ‘显示“3”
+MOV AL,BL
+MOV CL,4
+SHR AL,CL
+ADD AL,30H
+MOV DL,AL
+MOV AH,2
+INT 21H  ;  ‘显示“4”
+MOV AL,BL
+AND AL,0FH
+ADD AL,30H
+MOV DL,AL
+MOV AH,2
+INT 21H  ;  ‘显示“5”
+end start
+

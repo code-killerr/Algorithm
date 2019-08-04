@@ -1,0 +1,119 @@
+Microsoft (R) Macro Assembler Version 6.11		    01/02/19 00:33:55
+tempfile.asm						     Page 1 - 1
+
+
+ 0000				DATA SEGMENT
+ 0000 000C			  VAL1 DW 12
+ 0002 000D 000A 0024		  CRLF DW 0DH,0AH,'$'
+ 0008				DATA ENDS
+ 0000				CODE SEGMENT
+
+				   ASSUME CS:CODE,DS:DATA
+ 0000				   START: 
+ 0000				    BANDO PROC FAR  ;主程序BANDO
+ 0000  1E			   		  PUSH DS  ;设置返回DOS
+ 0001  2B C0			          SUB AX,AX
+ 0003  50			          PUSH AX
+ 0004  B8 ---- R		          MOV AX,DATA
+ 0007  8E D8			          MOV DS,AX  ;给DS赋值
+ 0009  FF 36 0000 R		          PUSH VAL1
+ 000D  E8 0001			          CALL PARIS
+ 0010  CB			          RET
+ 0011				 BANDO ENDP
+ 0011				 PARIS PROC NEAR  ;PARIS子程序
+ 0011  55			          PUSH BP
+ 0012  8B EC			          MOV BP,SP
+ 0014  53			          PUSH BX
+ 0015  8B 5E 04			          MOV BX,[BP+4] ;从堆栈中取出VAL1
+ 0018  E8 0016			          CALL OUTBIN  ;调用二进制显示子程序
+ 001B  B9 0008			          MOV CX,8    ;显示8个空格
+ 001E  B2 20			   SPACE: MOV DL,' '
+ 0020  B4 02			          MOV AH,2
+ 0022  CD 21			          INT 21H
+ 0024  E2 F8			          LOOP SPACE
+ 0026  E8 001E			          CALL OUTOCT  ;调用八进制显示子程序
+ 0029  E8 0041			          CALL DISP_CRLF
+ 002C  5B			          POP BX
+ 002D  5D			          POP BP
+ 002E  C2 0002			          RET 2
+ 0031				 PARIS ENDP
+ 0031				 OUTBIN PROC NEAR  ;二进制显示子程序
+ 0031  53			          PUSH BX
+ 0032  B9 0010			          MOV CX,16
+ 0035  D1 C3			   ONEBIT:ROL BX,1
+ 0037  8B D3			          MOV DX,BX
+ 0039  83 E2 01			          AND DX,1
+ 003C  80 CA 30			          OR DL,30H ;转换为ASCII码
+ 003F  B4 02			          MOV AH,2
+ 0041  CD 21			          INT 21H
+ 0043  E2 F0			          LOOP ONEBIT
+ 0045  5B			          POP BX
+ 0046  C3			          RET
+ 0047				 OUTBIN ENDP
+ 0047				 OUTOCT PROC NEAR  ;八进制显示子程序
+ 0047  D1 C3			          ROL BX,1;16位二进制数包含6位八进制数，最高位仅1位
+ 0049  8B D3			          MOV DX,BX
+ 004B  83 E2 01			          AND DX,1
+ 004E  80 CA 30			          OR DL,30H ;转换为ASCII码
+ 0051  B4 02			          MOV AH,2
+ 0053  CD 21			          INT 21H
+ 0055  B9 0005			          MOV CX,5  ;余下还有5位八进制数
+ 0058  51			     NEXT:PUSH CX
+ 0059  B1 03			          MOV CL,3 ;1位八进制数包含3位二进制数
+ 005B  D3 C3			          ROL BX,CL
+ 005D  8B D3			          MOV DX,BX
+ 005F  83 E2 07			          AND DX,07H
+ 0062  80 CA 30			          OR DL,30H ;转换为ASCII码
+ 0065  B4 02			          MOV AH,2
+ 0067  CD 21			          INT 21H
+ 0069  59			          POP CX
+ 006A  E2 EC			          LOOP NEXT
+ 006C  C3			          RET
+ 006D				 OUTOCT ENDP
+ 006D				 DISP_CRLF PROC NEAR ;显示回车换行子程序
+ 006D  8D 16 0002 R		          LEA DX,CRLF
+ 0071  B4 09			          MOV AH,09H
+ 0073  CD 21			          INT 21H
+ 0075  C3			          RET
+ 0076				 DISP_CRLF ENDP
+ 0076				      CODE ENDS
+				end start
+
+Microsoft (R) Macro Assembler Version 6.11		    01/02/19 00:33:55
+tempfile.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+CODE . . . . . . . . . . . . . .	16 Bit	 0076	  Para	  Private 
+DATA . . . . . . . . . . . . . .	16 Bit	 0008	  Para	  Private 
+
+
+Procedures,  parameters and locals:
+
+                N a m e                 Type     Value    Attr
+
+BANDO  . . . . . . . . . . . . .	P Far	 0000	  CODE	Length= 0011 Public
+DISP_CRLF  . . . . . . . . . . .	P Near	 006D	  CODE	Length= 0009 Public
+OUTBIN . . . . . . . . . . . . .	P Near	 0031	  CODE	Length= 0016 Public
+  ONEBIT . . . . . . . . . . . .	L Near	 0035	  CODE	
+OUTOCT . . . . . . . . . . . . .	P Near	 0047	  CODE	Length= 0026 Public
+  NEXT . . . . . . . . . . . . .	L Near	 0058	  CODE	
+PARIS  . . . . . . . . . . . . .	P Near	 0011	  CODE	Length= 0020 Public
+  SPACE  . . . . . . . . . . . .	L Near	 001E	  CODE	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+CRLF . . . . . . . . . . . . . .	Word	 0002	  DATA	
+START  . . . . . . . . . . . . .	L Near	 0000	  CODE	
+VAL1 . . . . . . . . . . . . . .	Word	 0000	  DATA	
+
+	   0 Warnings
+	   0 Errors

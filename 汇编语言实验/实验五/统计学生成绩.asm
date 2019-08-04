@@ -19,7 +19,7 @@ datas    segment                     ;define data segment 定义数据段
   wordall dw word1,word2,word3,word4,word5,word6
 datas  ends
 ;************************************
-codes segment                       ;define code segment
+codes segment                       ;defi*...............................ne code segment
 ;----------------------------
 ;main      proc      far               ; main part of program
 assume  cs:codes, ds:datas
